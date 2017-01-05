@@ -11,6 +11,7 @@ function inCommand (cmd) {
   if (!npm_config_argv.cooked instanceof Array) process.exit(1)
 
   var V
+  if (npm_config_argv.cooked[0] === 'run') npm_config_argv.cooked.shift()
   while ((V = npm_config_argv.cooked.shift()) !== undefined) {
     if (/^-/.test(V)) continue
     if (cmd.test(V)) return true
@@ -20,9 +21,9 @@ function inCommand (cmd) {
 }
 
 exports.inPublish = function () {
-  return inCommand(/^pu(b(l(i(sh?)?)?)?)?$/)
+  return inCommand(/^(?:pre)?pu(b(l(i(sh?)?)?)?)?$/)
 }
 
 exports.inInstall = function () {
-  return inCommand(/^i(n(s(t(a(ll?)?)?)?)?)?$/)
+  return inCommand(/^(?:pre)?i(n(s(t(a(ll?)?)?)?)?)?$/)
 }
